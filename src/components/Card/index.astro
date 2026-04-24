@@ -1,0 +1,104 @@
+---
+/**
+ * <Card>
+ *
+ * General-purpose content card used throughout the marketing site:
+ * value-props grid, industry grid, resource section, etc.
+ *
+ * Structure (all parts optional except title):
+ *
+ *   ┌─────────────────────────────┐
+ *   │ [icon slot]                 │  ← optional named slot
+ *   │                             │
+ *   │ Title                       │  ← required prop
+ *   │ Body copy                   │  ← prop or default slot
+ *   │                             │
+ *   │ [footer link or slot]       │  ← optional
+ *   └─────────────────────────────┘
+ *
+ * Named slots:
+ *   icon   — icon, illustration, or any leading visual (e.g. an <svg>)
+ *   footer — custom footer content; overrides href/linkText props
+ *
+ * Default slot:
+ *   Body content — use instead of the `body` prop for rich markup.
+ *
+ * Usage (simple):
+ *   <Card title="Redazione italiana" body="Codice fiscale, P.IVA…" href="/funzionalita" />
+ *
+ * Usage (with slots):
+ *   <Card title="Redazione italiana" href="/funzionalita">
+ *     <svg slot="icon" …/>
+ *     <p>Codice fiscale, <strong>P.IVA</strong>…</p>
+ *   </Card>
+ */
+
+export interface Props {
+  /** Card heading — always required; rendered as <h3>. */
+  title: string;
+  /**
+   * Plain-text body copy. Use the default slot instead for rich markup.
+   * If both are provided, the `body` prop renders first.
+   */
+  body?: string;
+  /** Makes the footer link active. Requires `linkText` or uses default. */
+  href?: string;
+  /** @default 'Scopri di più →' */
+  linkText?: string;
+  class?: string;
+}
+
+const {
+  title,
+  body,
+  href,
+  linkText = 'Scopri di più →',
+  class: className,
+} = Astro.props;
+
+const hasFooterSlot = Astro.slots.has('footer');
+const hasIconSlot  = Astro.slots.has('icon');
+---
+
+<article
+  class:list={[
+    'flex flex-col gap-4 rounded-lg border border-gray-200 bg-white p-6 shadow-sm',
+    'transition-shadow duration-150 hover:shadow-md',
+    className,
+  ]}
+>
+  {hasIconSlot && (
+    <div class="flex h-10 w-10 items-center justify-center rounded-md bg-primary-50 text-primary">
+      <slot name="icon" />
+    </div>
+  )}
+
+  <div class="flex flex-col gap-2 flex-1">
+    <h3 class="text-base font-semibold text-gray-900 leading-snug">
+      {title}
+    </h3>
+
+    {body && (
+      <p class="text-sm text-gray-600 leading-relaxed">{body}</p>
+    )}
+
+    <!-- Default slot for rich body content -->
+    <slot />
+  </div>
+
+  {(href || hasFooterSlot) && (
+    <footer class="mt-auto pt-2 border-t border-gray-100">
+      {hasFooterSlot ? (
+        <slot name="footer" />
+      ) : href ? (
+        <a
+          href={href}
+          class="text-sm font-medium text-primary hover:text-primary-800 transition-colors duration-150"
+        >
+          <!-- COPY: DRAFT v1 -->
+          {linkText}
+        </a>
+      ) : null}
+    </footer>
+  )}
+</article>
