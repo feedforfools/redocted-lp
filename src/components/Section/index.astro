@@ -1,0 +1,98 @@
+---
+/**
+ * <Section>
+ *
+ * Full-width page section wrapper. Handles vertical padding, background
+ * colour, and optional decorative dividers. Always pair with <Container>
+ * inside to constrain content width.
+ *
+ * Typical usage:
+ *   <Section background="gray" padding="lg">
+ *     <Container>…</Container>
+ *   </Section>
+ *
+ * Padding scale (vertical only — horizontal padding lives in <Container>):
+ *   none — 0
+ *   xs   — 32px
+ *   sm   — 48px
+ *   md   — 64px  (default)
+ *   lg   — 96px
+ *   xl   — 128px
+ *
+ * Background variants:
+ *   white   — solid white, default text colours  (default)
+ *   gray    — warm gray-50, default text colours
+ *   primary — deep green, inverted text colours
+ *   dark    — near-black gray-900, inverted text colours
+ *   none    — transparent (for sections nested inside coloured parents)
+ *
+ * Divider:
+ *   Adds a 1px warm-gray border rule at the top, bottom, or both edges.
+ *   Used to visually separate adjacent white/gray sections.
+ */
+
+export interface Props {
+  /** Vertical padding preset. @default 'md' */
+  padding?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+  /** Background colour variant. @default 'white' */
+  background?: 'white' | 'gray' | 'primary' | 'dark' | 'none';
+  /**
+   * Decorative border rule at section edge(s).
+   * Only visible on white/gray backgrounds — omit for primary/dark.
+   */
+  divider?: 'top' | 'bottom' | 'both';
+  /** HTML element rendered. @default 'section' */
+  as?: 'section' | 'div' | 'article' | 'aside' | 'header' | 'footer';
+  /** Anchor id for in-page linking (e.g. id="waitlist"). */
+  id?: string;
+  /** Additional CSS classes forwarded to the root element. */
+  class?: string;
+}
+
+const {
+  padding = 'md',
+  background = 'white',
+  divider,
+  as: Tag = 'section',
+  id,
+  class: className,
+  ...attrs
+} = Astro.props;
+
+const paddingClass: Record<NonNullable<Props['padding']>, string> = {
+  none: 'py-0',
+  xs:   'py-8',
+  sm:   'py-12',
+  md:   'py-16',
+  lg:   'py-24',
+  xl:   'py-32',
+};
+
+const backgroundClass: Record<NonNullable<Props['background']>, string> = {
+  white:   'bg-white',
+  gray:    'bg-gray-50',
+  primary: 'bg-primary-700 text-white',
+  dark:    'bg-gray-900 text-white',
+  none:    '',
+};
+
+const dividerClass: Record<string, string> = {
+  top:    'border-t border-gray-200',
+  bottom: 'border-b border-gray-200',
+  both:   'border-t border-b border-gray-200',
+};
+---
+
+<Tag
+  id={id}
+  class:list={[
+    'w-full',
+    paddingClass[padding],
+    backgroundClass[background],
+    divider ? dividerClass[divider] : '',
+    className,
+  ]}
+  {...attrs}
+>
+  <slot />
+</Tag>
