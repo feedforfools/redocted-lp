@@ -4,6 +4,9 @@
 /* Design tokens — must follow fonts so var(--font-sans) resolves correctly */
 @import "./tokens.css";
 
+/* Prose typography — styles for long-form MDX content */
+@import "./prose.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

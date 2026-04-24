@@ -1,0 +1,46 @@
+---
+/**
+ * <Prose>
+ *
+ * Typographic wrapper for long-form rendered MDX: blog posts, legal pages,
+ * industry detail pages. Applies the `.prose` CSS class from
+ * src/styles/prose.css, which styles all standard HTML elements produced
+ * by MDX rendering.
+ *
+ * Width is NOT controlled here — wrap with <Container variant="prose">
+ * outside this component to constrain line length.
+ *
+ * Usage (blog post):
+ *   <Container variant="prose">
+ *     <Prose>
+ *       <Content />   ← Astro MDX Content component
+ *     </Prose>
+ *   </Container>
+ *
+ * Usage (legal page — slightly wider):
+ *   <Container variant="narrow">
+ *     <Prose>
+ *       <Content />
+ *     </Prose>
+ *   </Container>
+ */
+
+export interface Props {
+  /**
+   * HTML element rendered. Use 'article' for standalone content (blog posts),
+   * 'div' when nested inside another semantic element.
+   * @default 'div'
+   */
+  as?: 'div' | 'article' | 'section';
+  class?: string;
+}
+
+const {
+  as: Tag = 'div',
+  class: className,
+} = Astro.props;
+---
+
+<Tag class:list={['prose', className]}>
+  <slot />
+</Tag>

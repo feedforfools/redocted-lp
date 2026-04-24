@@ -1,0 +1,207 @@
+/**
+ * Prose typography styles
+ *
+ * Applied via the `.prose` class, rendered by the <Prose> component.
+ * Styles MDX/HTML elements for long-form reading: blog posts, legal pages,
+ * industry detail pages.
+ *
+ * Design decisions:
+ * - max-width prose (65ch) is NOT set here; use <Container variant="prose">
+ *   outside <Prose> to control width.
+ * - Font size is base (1rem); callers may override with a size class on <Prose>.
+ * - Colour tokens are used throughout so prose inherits any future theming.
+ * - No opinionated margin on first/last children (no orphan spacing issues).
+ */
+
+/* ---------------------------------------------------------------
+ * Vertical rhythm — consistent spacing between block elements
+ * --------------------------------------------------------------- */
+.prose > * + * {
+  margin-top: 1.25em;
+}
+
+/* ---------------------------------------------------------------
+ * Headings
+ * --------------------------------------------------------------- */
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4 {
+  color: var(--color-gray-900);
+  font-weight: 600;
+  line-height: var(--line-height-tight);
+  margin-top: 2em;
+  margin-bottom: 0.5em;
+}
+
+.prose h1 { font-size: var(--font-size-4xl); }
+.prose h2 { font-size: var(--font-size-3xl); }
+.prose h3 { font-size: var(--font-size-2xl); }
+.prose h4 { font-size: var(--font-size-xl);  }
+
+/* First heading needs no top margin */
+.prose h1:first-child,
+.prose h2:first-child,
+.prose h3:first-child,
+.prose h4:first-child {
+  margin-top: 0;
+}
+
+/* ---------------------------------------------------------------
+ * Body text
+ * --------------------------------------------------------------- */
+.prose p {
+  color: var(--color-gray-700);
+  line-height: var(--line-height-relaxed);
+}
+
+.prose strong {
+  font-weight: 600;
+  color: var(--color-gray-900);
+}
+
+.prose em {
+  font-style: italic;
+}
+
+/* ---------------------------------------------------------------
+ * Links
+ * --------------------------------------------------------------- */
+.prose a {
+  color: var(--color-primary);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+  transition: color 0.15s;
+}
+
+.prose a:hover {
+  color: var(--color-primary-hover);
+}
+
+/* ---------------------------------------------------------------
+ * Lists
+ * --------------------------------------------------------------- */
+.prose ul,
+.prose ol {
+  padding-left: 1.5em;
+  color: var(--color-gray-700);
+  line-height: var(--line-height-relaxed);
+}
+
+.prose ul { list-style-type: disc; }
+.prose ol { list-style-type: decimal; }
+
+.prose li + li {
+  margin-top: 0.375em;
+}
+
+.prose li > ul,
+.prose li > ol {
+  margin-top: 0.375em;
+}
+
+/* ---------------------------------------------------------------
+ * Blockquote
+ * --------------------------------------------------------------- */
+.prose blockquote {
+  border-left: 3px solid var(--color-primary-300);
+  padding-left: 1.25em;
+  color: var(--color-gray-600);
+  font-style: italic;
+}
+
+/* ---------------------------------------------------------------
+ * Code — inline and block
+ * --------------------------------------------------------------- */
+.prose code {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  background-color: var(--color-gray-100);
+  color: var(--color-gray-800);
+  border-radius: var(--radius-sm);
+  padding: 0.15em 0.35em;
+}
+
+/* Pre-formatted code blocks */
+.prose pre {
+  background-color: var(--color-gray-900);
+  color: var(--color-gray-100);
+  border-radius: var(--radius-md);
+  padding: 1.25em 1.5em;
+  overflow-x: auto;
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-relaxed);
+}
+
+/* Reset inline code styles inside a block */
+.prose pre code {
+  background: none;
+  padding: 0;
+  border-radius: 0;
+  font-size: inherit;
+  color: inherit;
+}
+
+/* ---------------------------------------------------------------
+ * Horizontal rule
+ * --------------------------------------------------------------- */
+.prose hr {
+  border: none;
+  border-top: 1px solid var(--color-border);
+  margin-top: 2.5em;
+  margin-bottom: 2.5em;
+}
+
+/* ---------------------------------------------------------------
+ * Tables
+ * --------------------------------------------------------------- */
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-normal);
+}
+
+.prose thead th {
+  background-color: var(--color-gray-50);
+  color: var(--color-gray-700);
+  font-weight: 600;
+  text-align: left;
+  padding: 0.625em 0.875em;
+  border-bottom: 2px solid var(--color-border-strong);
+}
+
+.prose tbody td {
+  padding: 0.625em 0.875em;
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-gray-700);
+  vertical-align: top;
+}
+
+.prose tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* ---------------------------------------------------------------
+ * Images
+ * --------------------------------------------------------------- */
+.prose img {
+  border-radius: var(--radius-md);
+  max-width: 100%;
+  height: auto;
+}
+
+/* ---------------------------------------------------------------
+ * Figure + caption
+ * --------------------------------------------------------------- */
+.prose figure {
+  margin: 0;
+}
+
+.prose figcaption {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-tertiary);
+  text-align: center;
+  margin-top: 0.5em;
+}
