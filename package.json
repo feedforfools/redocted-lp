@@ -1,0 +1,27 @@
+{
+  "name": "redocted-lp",
+  "version": "0.1.0",
+  "description": "REDOCTED landing page",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"No tests yet\" && exit 0",
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview --port 3000",
+    "typecheck": "tsc --noEmit",
+    "lint": "echo 'no linter yet'",
+    "format": "echo 'no formatter yet'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/feedforfools/redocted-lp.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/feedforfools/redocted-lp/issues"
+  },
+  "homepage": "https://github.com/feedforfools/redocted-lp#readme"
+}
