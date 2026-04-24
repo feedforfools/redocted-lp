@@ -26,6 +26,8 @@
   "homepage": "https://github.com/feedforfools/redocted-lp#readme",
   "devDependencies": {
     "@axe-core/playwright": "^4.11.2",
+    "@fontsource-variable/inter": "^5.2.8",
+    "@fontsource-variable/jetbrains-mono": "^5.2.8",
     "@playwright/test": "^1.59.1",
     "@tailwindcss/postcss": "^4.2.4",
     "@types/node": "^25.6.0",

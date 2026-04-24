@@ -1,4 +1,7 @@
-/* Design tokens — must be first so Tailwind utilities can reference them */
+/* @font-face declarations — must be first to ensure fonts are registered */
+@import "./fonts.css";
+
+/* Design tokens — must follow fonts so var(--font-sans) resolves correctly */
 @import "./tokens.css";
 
 @tailwind base;
