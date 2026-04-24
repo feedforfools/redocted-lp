@@ -61,3 +61,5 @@ No Google Analytics, no cookies, no third-party scripts. Plausible (EU-hosted) i
 Hosting: Cloudflare Pages (git-push deploys, EU edge, free tier)  
 Domain: redocted.com  
 Preview deploys: Automatic per PR (URL in comment)
+
+**Setup instructions:** See [DEPLOYMENT.md](./DEPLOYMENT.md)
