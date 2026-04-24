@@ -1,0 +1,56 @@
+---
+/**
+ * <Badge>
+ *
+ * Small inline label for status, category, or metadata. Used in the
+ * PII coverage matrix (live / beta / planned) and elsewhere throughout
+ * the site.
+ *
+ * Variants:
+ *   neutral — warm-gray  (default)
+ *   success — green      (e.g. "Live", "Attivo")
+ *   warning — amber      (e.g. "Beta")
+ *   danger  — red        (e.g. "Deprecato")
+ *   primary — deep-green (e.g. category tags, highlighted labels)
+ *
+ * Usage:
+ *   <Badge>Live</Badge>
+ *   <Badge variant="warning">Beta</Badge>
+ *   <Badge variant="success" size="sm">Attivo</Badge>
+ */
+
+export interface Props {
+  /** @default 'neutral' */
+  variant?: 'neutral' | 'success' | 'warning' | 'danger' | 'primary';
+  /** @default 'md' */
+  size?: 'sm' | 'md';
+  class?: string;
+}
+
+const {
+  variant = 'neutral',
+  size = 'md',
+  class: className,
+} = Astro.props;
+
+const base = 'inline-flex items-center rounded-full font-medium leading-none';
+
+const sizes: Record<NonNullable<Props['size']>, string> = {
+  sm: 'px-2   py-0.5 text-xs',
+  md: 'px-2.5 py-1   text-xs',
+};
+
+const variants: Record<NonNullable<Props['variant']>, string> = {
+  neutral: 'bg-gray-100  text-gray-700',
+  success: 'bg-success-bg text-success',
+  warning: 'bg-warning-bg text-warning',
+  danger:  'bg-danger-bg  text-danger',
+  primary: 'bg-primary-50 text-primary-700',
+};
+---
+
+<span
+  class:list={[base, sizes[size], variants[variant], className]}
+>
+  <slot />
+</span>
