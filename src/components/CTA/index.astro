@@ -1,0 +1,147 @@
+---
+/**
+ * <CTA>
+ *
+ * Call-to-action element. Renders as <a> when `href` is provided,
+ * otherwise as <button>. Three visual variants share the same padding
+ * and border-width so the layout is stable regardless of variant.
+ *
+ * Variants:
+ *   primary   — filled deep-green, white text            (default)
+ *   secondary — white fill, deep-green border + text
+ *   ghost     — no fill, no border, deep-green text
+ *
+ * Sizes:
+ *   sm — text-sm  px-3 py-1.5
+ *   md — text-base px-5 py-2.5                          (default)
+ *   lg — text-lg  px-7 py-3.5
+ *
+ * Loading state:
+ *   Shows a CSS spinner; sets aria-busy. Implies disabled.
+ *   Respects prefers-reduced-motion (spinner becomes static).
+ *
+ * Disabled state:
+ *   On <a>: aria-disabled + tabindex=-1 + pointer-events:none.
+ *   On <button>: native disabled attribute.
+ */
+
+export interface Props {
+  /** @default 'primary' */
+  variant?: 'primary' | 'secondary' | 'ghost';
+  /** @default 'md' */
+  size?: 'sm' | 'md' | 'lg';
+  /** Shows spinner; implies disabled. @default false */
+  loading?: boolean;
+  /** @default false */
+  disabled?: boolean;
+  /** Renders as <a> when provided. */
+  href?: string;
+  /** Add rel="noopener noreferrer" automatically when _blank. */
+  target?: string;
+  rel?: string;
+  /** Only used when rendering as <button>. @default 'button' */
+  type?: 'button' | 'submit' | 'reset';
+  id?: string;
+  'aria-label'?: string;
+  'aria-describedby'?: string;
+  class?: string;
+}
+
+const {
+  variant = 'primary',
+  size = 'md',
+  loading = false,
+  disabled = false,
+  href,
+  target,
+  rel: relProp,
+  type = 'button',
+  id,
+  class: className,
+  ...ariaAttrs
+} = Astro.props;
+
+const isLink = href !== undefined;
+const isDisabled = disabled || loading;
+
+// Security: always add rel for blank-target links
+const rel =
+  target === '_blank'
+    ? relProp
+      ? `${relProp} noopener noreferrer`
+      : 'noopener noreferrer'
+    : relProp;
+
+const base =
+  'inline-flex items-center justify-center rounded-md font-medium transition-colors duration-150 select-none cursor-pointer';
+
+const sizes: Record<NonNullable<Props['size']>, string> = {
+  sm: 'text-sm  px-3 py-1.5 gap-1.5',
+  md: 'text-base px-5 py-2.5 gap-2',
+  lg: 'text-lg  px-7 py-3.5 gap-2.5',
+};
+
+// All variants use border-2 so height stays identical regardless of variant
+const variants: Record<NonNullable<Props['variant']>, string> = {
+  primary:   'bg-primary   text-white border-2 border-transparent hover:bg-primary-800 active:bg-primary-900',
+  secondary: 'bg-white     text-primary border-2 border-primary   hover:bg-primary-50  active:bg-primary-100',
+  ghost:     'bg-transparent text-primary border-2 border-transparent hover:bg-primary-50 active:bg-primary-100',
+};
+
+const disabledCls = isDisabled ? 'opacity-60 cursor-not-allowed pointer-events-none' : '';
+---
+
+{isLink ? (
+  <a
+    href={href}
+    id={id}
+    target={target}
+    rel={rel}
+    aria-disabled={isDisabled ? 'true' : undefined}
+    tabindex={isDisabled ? -1 : undefined}
+    class:list={[base, sizes[size], variants[variant], disabledCls, className]}
+    {...ariaAttrs}
+  >
+    {loading && <span class="spinner" aria-hidden="true" />}
+    <slot />
+  </a>
+) : (
+  <button
+    type={type}
+    id={id}
+    disabled={isDisabled || undefined}
+    aria-busy={loading ? 'true' : undefined}
+    class:list={[base, sizes[size], variants[variant], disabledCls, className]}
+    {...ariaAttrs}
+  >
+    {loading && <span class="spinner" aria-hidden="true" />}
+    <slot />
+  </button>
+)}
+
+<style>
+  /* CSS-only spinner; no JS required. Controlled by the `loading` prop. */
+  .spinner {
+    flex-shrink: 0;
+    width: 1em;
+    height: 1em;
+    border-radius: 50%;
+    border: 2px solid currentColor;
+    border-top-color: transparent;
+    animation: cta-spin 0.55s linear infinite;
+  }
+
+  @keyframes cta-spin {
+    to { transform: rotate(360deg); }
+  }
+
+  /* Reduced motion: freeze spinner rather than removing it so the user
+     still sees the loading state, just without vestibular discomfort. */
+  @media (prefers-reduced-motion: reduce) {
+    .spinner {
+      animation: none;
+      border-top-color: currentColor;
+      opacity: 0.4;
+    }
+  }
+</style>
