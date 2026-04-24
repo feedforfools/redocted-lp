@@ -2,3 +2,8 @@ _*.md
 node_modules
 dist
 .astro
+playwright-report
+test-results
+*.key
+.env
+.env.local
