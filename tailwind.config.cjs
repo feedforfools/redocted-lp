@@ -127,6 +127,17 @@ module.exports = {
       },
 
       /* -------------------------------------------------------
+       * Container max-widths
+       * Used exclusively by <Container> component variants.
+       * ------------------------------------------------------- */
+      maxWidth: {
+        'container-prose':   '65ch',       /* readable line length for long-form text */
+        'container-narrow':  '36rem',      /* 576px — forms, tight editorial sections */
+        'container-default': '75rem',      /* 1200px — standard marketing content     */
+        'container-wide':    '90rem',      /* 1440px — wide sections, hero             */
+      },
+
+      /* -------------------------------------------------------
        * Z-index scale
        * ------------------------------------------------------- */
       zIndex: {

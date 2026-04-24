@@ -1,0 +1,65 @@
+---
+/**
+ * <Container>
+ *
+ * Constrains content to a max-width and centres it horizontally with
+ * responsive horizontal padding. All page sections use this; it is the
+ * only place max-width logic lives.
+ *
+ * Variants:
+ *   prose   — 65ch  — long-form text (blog posts, legal pages)
+ *   narrow  — 576px — forms, tight editorial sections
+ *   default — 1200px — standard marketing content (default)
+ *   wide    — 1440px — hero, full-bleed-ish sections
+ *   full    — no max-width — true full-bleed (background spans viewport)
+ *
+ * Usage:
+ *   <Container>…</Container>
+ *   <Container variant="prose">…</Container>
+ *   <Container variant="wide" as="section">…</Container>
+ */
+
+export interface Props {
+  /**
+   * Controls the max-width of the inner content area.
+   * @default 'default'
+   */
+  variant?: 'prose' | 'narrow' | 'default' | 'wide' | 'full';
+  /**
+   * HTML element to render. Defaults to 'div'; use semantic elements
+   * ('section', 'article', 'main', 'aside') where appropriate.
+   * @default 'div'
+   */
+  as?: 'div' | 'section' | 'article' | 'main' | 'aside' | 'header' | 'footer';
+  /** Additional CSS classes forwarded to the root element. */
+  class?: string;
+}
+
+const {
+  variant = 'default',
+  as: Tag = 'div',
+  class: className,
+  ...attrs
+} = Astro.props;
+
+const maxWidthClass: Record<NonNullable<Props['variant']>, string> = {
+  prose:   'max-w-container-prose',
+  narrow:  'max-w-container-narrow',
+  default: 'max-w-container-default',
+  wide:    'max-w-container-wide',
+  full:    'max-w-none',
+};
+---
+
+<!-- COPY: DRAFT v1 — no copy in this structural component -->
+<Tag
+  class:list={[
+    'mx-auto w-full',
+    'px-4 sm:px-6 lg:px-8',
+    maxWidthClass[variant],
+    className,
+  ]}
+  {...attrs}
+>
+  <slot />
+</Tag>
