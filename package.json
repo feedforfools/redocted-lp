@@ -9,8 +9,8 @@
     "build": "astro build",
     "preview": "astro preview --port 3000",
     "typecheck": "tsc --noEmit",
-    "lint": "echo 'no linter yet'",
-    "format": "echo 'no formatter yet'"
+    "lint": "biome check .",
+    "format": "biome format ."
   },
   "repository": {
     "type": "git",
@@ -23,5 +23,14 @@
   "bugs": {
     "url": "https://github.com/feedforfools/redocted-lp/issues"
   },
-  "homepage": "https://github.com/feedforfools/redocted-lp#readme"
+  "homepage": "https://github.com/feedforfools/redocted-lp#readme",
+  "devDependencies": {
+    "@types/node": "^25.6.0",
+    "astro": "^6.1.9",
+    "autoprefixer": "^10.5.0",
+    "biome": "^0.3.3",
+    "postcss": "^8.5.10",
+    "tailwindcss": "^4.2.4",
+    "typescript": "^5.9.3"
+  }
 }
