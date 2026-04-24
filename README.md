@@ -15,9 +15,9 @@ npm run typecheck  # Check TypeScript
 
 ## Documentation
 
-- **`_DESCRIPTION.md`** — Product specs, positioning, audience, tech stack, constraints
+- **`_DESCRIPTION.md`** — Product specs, positioning, audience, tech stack, constraints (see §12 for rules)
 - **`_IMPLEMENTATION_PLAN.md`** — Epic-by-epic task breakdown with status
-- **`_AGENT_PROMPT.md`** — Instructions for the implementation agent
+- **`_AGENT_PROMPT.md`** — Instructions for the implementation agent, including code & content conventions
 
 ## Project Structure
 
